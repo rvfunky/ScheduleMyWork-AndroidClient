@@ -1,5 +1,7 @@
 package com.example.raghavendrkolisetty.schedulemywork;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +9,11 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import static com.example.raghavendrkolisetty.schedulemywork.R.id.schedulesLayout;
+import static com.example.raghavendrkolisetty.schedulemywork.R.id.upcomingLinearLayout;
 
 
 /**
@@ -17,7 +24,7 @@ import android.view.ViewGroup;
  * Use the {@link SchedulesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SchedulesFragment extends Fragment {
+public class SchedulesFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +71,12 @@ public class SchedulesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedules, container, false);
+        final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_schedules,container,false);
+        LinearLayout  upcomingLinearLayout= (LinearLayout) linearLayout.findViewById(R.id.upcomingLinearLayout);
+        ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
+        homeImage.setOnClickListener(this);
+        upcomingLinearLayout.setOnClickListener(this);
+        return linearLayout;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -89,6 +101,46 @@ public class SchedulesFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment=null;
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        switch (v.getId()){
+            case R.id.upcomingLinearLayout:
+                System.out.println("hitting");
+                try {
+                    fragment = (Fragment) UpcomingFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+                break;
+            case R.id.homeImage:
+                System.out.println("in homeimage handler");
+                try {
+                    fragment = (Fragment) HomeFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                //transaction.addToBackStack(null);
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                // Commit the transaction
+                transaction.commit();
+                break;
+
+        }
     }
 
     /**
