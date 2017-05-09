@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.raghavendrkolisetty.schedulemywork.TestFragment"
+    tools:context="com.example.raghavendrkolisetty.schedulemywork.SchedulesFragment"
     android:baselineAligned="false">
 
     <TableLayout
@@ -18,14 +18,14 @@
             android:padding="20dp"
             android:background="#eff0f1">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:src="@drawable/ic_home_black_24dp"
                 android:gravity="left"
-                android:paddingLeft="20dp"
-                android:layout_gravity="center"
-                android:text="Back" />
+                android:layout_weight="1"
+                android:scaleType="fitStart"
+                android:paddingLeft="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -33,16 +33,17 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textSize="20dp"
-                android:text="Home" />
+                android:text="Schedules" />
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:paddingRight="20dp"
-                android:text="name" />
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_refresh_black_24dp" />
         </TableRow>
 
     </TableLayout>
@@ -62,7 +63,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:layout_margin="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -70,7 +72,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:text="Messages"/>
+                    android:text="My Upcoming Shifts"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -91,7 +93,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:layout_margin="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,7 +102,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:text="Messages"/>
+                    android:text="Schedule"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,7 +124,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:layout_margin="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -129,8 +133,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textSize="20dp"
-                    android:text="Messages"/>
-
+                    android:text="Who's On NOW"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
@@ -146,6 +149,37 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:text="Who's On LATER"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

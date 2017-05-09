@@ -6,12 +6,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 
@@ -23,7 +21,7 @@ import android.widget.LinearLayout;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,30 +70,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final FrameLayout frameLayout = (FrameLayout) inflater.inflate(R.layout.fragment_home,container,false);
-        Button btn = (Button) frameLayout.findViewById(R.id.moveToNext);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment=null;
-                try {
-                    fragment = (Fragment) TestFragment.newInstance("a","b");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                // Replace whatever is in the fragment_container view with this fragment,
-                // and add the transaction to the back stack
-                transaction.replace(R.id.flContent, fragment);
-                transaction.addToBackStack(null);
-
-                // Commit the transaction
-                transaction.commit();
-            }
-        });
-        return frameLayout;
+        final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_home,container,false);
+        LinearLayout schedulesLayout = (LinearLayout) linearLayout.findViewById(R.id.schedulesLayout);
+        schedulesLayout.setOnClickListener(this);
+        return linearLayout;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -120,6 +98,31 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.schedulesLayout:
+                System.out.println("in the handler method");
+                Fragment fragment=null;
+                try {
+                    fragment = (Fragment) SchedulesFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+                break;
+        }
     }
 
     /**
