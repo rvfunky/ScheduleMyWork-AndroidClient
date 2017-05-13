@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.content.Intent;
 
+
+import static com.example.raghavendrkolisetty.schedulemywork.R.id.datePicker;
 import static com.example.raghavendrkolisetty.schedulemywork.R.id.schedulesLayout;
 import static com.example.raghavendrkolisetty.schedulemywork.R.id.upcomingLinearLayout;
 
@@ -74,8 +77,11 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
         final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_schedules,container,false);
         LinearLayout  upcomingLinearLayout= (LinearLayout) linearLayout.findViewById(R.id.upcomingLinearLayout);
         ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
+        LinearLayout datepicker=(LinearLayout) linearLayout.findViewById(R.id.datePicker);
         homeImage.setOnClickListener(this);
         upcomingLinearLayout.setOnClickListener(this);
+        datepicker.setOnClickListener(this);
+
         return linearLayout;
     }
 
@@ -139,6 +145,27 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
                 // Commit the transaction
                 transaction.commit();
                 break;
+            case R.id.datePicker:
+//                System.out.println("in date picker");
+//                Intent intent = new Intent(getActivity(), DatetimeActivity.class);
+//                startActivity(intent);
+               try {
+                  fragment = (Fragment) DatepickerFragment2.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                //transaction.addToBackStack(null);
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                // Commit the transaction
+                transaction.commit();
+                break;
+
+
+
+
 
         }
     }
