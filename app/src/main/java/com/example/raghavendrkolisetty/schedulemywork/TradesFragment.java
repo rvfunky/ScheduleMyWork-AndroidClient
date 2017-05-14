@@ -148,8 +148,8 @@ public class TradesFragment extends Fragment implements  View.OnClickListener {
                     e.printStackTrace();
                 }
                 transaction.replace(R.id.flContent, fragment);
-                //transaction.addToBackStack(null);
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
                 break;
@@ -160,8 +160,8 @@ public class TradesFragment extends Fragment implements  View.OnClickListener {
                     e.printStackTrace();
                 }
                 transaction.replace(R.id.flContent, fragment);
-                //transaction.addToBackStack(null);
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
                 break;
@@ -172,8 +172,8 @@ public class TradesFragment extends Fragment implements  View.OnClickListener {
                     e.printStackTrace();
                 }
                 transaction.replace(R.id.flContent, fragment);
-                //transaction.addToBackStack(null);
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
                 break;
@@ -184,8 +184,8 @@ public class TradesFragment extends Fragment implements  View.OnClickListener {
                     e.printStackTrace();
                 }
                 transaction.replace(R.id.flContent, fragment);
-                //transaction.addToBackStack(null);
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
                 break;
