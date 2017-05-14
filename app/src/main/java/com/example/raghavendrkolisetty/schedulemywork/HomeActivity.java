@@ -3,6 +3,7 @@ package com.example.raghavendrkolisetty.schedulemywork;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.Fragment;
@@ -16,15 +17,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, SchedulesFragment.OnFragmentInteractionListener, UpcomingFragment.OnFragmentInteractionListener,DatepickerFragment2.OnFragmentInteractionListener {
+
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private View navHeader;
+    private ImageView imgNavHeaderBg, imgProfile;
+    private TextView txtName, txtWebsite;
+    private Handler mHandler;
+    public static int navItemIndex = 0;
+    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
+    //private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+    private static final String urlProfileImg = "https://i0.wp.com/www.siasat.com/wp-content/uploads/2015/08/sachin-tendulkar1.jpg?resize=651%2C330";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mHandler = new Handler();
         setSupportActionBar(toolbar);
         Fragment homeFragment=null;
         try {
@@ -60,6 +78,40 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //from here changes
+        navHeader = navigationView.getHeaderView(0);
+        txtName = (TextView) navHeader.findViewById(R.id.name);
+        txtWebsite = (TextView) navHeader.findViewById(R.id.website);
+        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
+        imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
+        loadNavHeader();
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+        }
+    }
+
+    public void loadNavHeader(){
+
+        txtName.setText("sreekar");
+        txtWebsite.setText("test.com");
+        // loading header background image
+        Glide.with(this).load(urlNavHeaderBg)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgNavHeaderBg);
+
+        // Loading profile image
+        Glide.with(this).load(urlProfileImg)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new
+                        CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgProfile);
+        System.out.println("testing");
+
+
     }
 
     @Override
@@ -104,17 +156,20 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
             fragmentClass = HomeFragment.class;
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_schedules) {
 
+            fragmentClass=SchedulesFragment.class;
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if(id==R.id.logout){
 
-        } else if (id == R.id.nav_send) {
+
 
         }
+
+
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {

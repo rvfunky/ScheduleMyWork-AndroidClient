@@ -22,15 +22,15 @@ public class DateTimeDialog extends Dialog implements android.view.View.OnClickL
 
 private TimePicker mTime;
 private DatePicker mDate;
+        String date;
+        String time;
+
 
 public DateTimeDialog(Context context) {
         super(context);
         setContentView(R.layout.date_time);
         mTime = (TimePicker)findViewById(R.id.timePicker);
         mDate = (DatePicker)findViewById(R.id.datePicker);
-        System.out.println("reached till here");
-        System.out.println("time is"+mTime.toString());
-        System.out.println("date is"+mDate.toString());
         Button done = (Button)findViewById(R.id.done);
         done.setOnClickListener(this);
         Button cancel = (Button)findViewById(R.id.cancel);
@@ -41,6 +41,8 @@ public DateTimeDialog(Context context) {
 public void onClick(View v) {
         switch(v.getId()){
         case R.id.done:
+                System.out.println("date is from here "+date);
+                System.out.println("time is from here "+time);
         dismiss();
         case R.id.cancel:
         dismiss();
@@ -56,4 +58,16 @@ public void setTimeListener(OnTimeChangedListener time){
 public void setDateListener(int year, int monthOfYear, int dayOfMonth, OnDateChangedListener date){
         mDate.init(year, monthOfYear, dayOfMonth, date);
         }
+public void setTime(String t){
+
+        time=t;
+
+}
+public void setDate(String d){
+
+        date=d;
+
+}
+
+
         }

@@ -31,6 +31,7 @@ import android.widget.TimePicker.OnTimeChangedListener;
  * create an instance of this fragment.
  */
 public class DateTimeDialogFragment extends DialogFragment implements OnTimeChangedListener, OnDateChangedListener  {
+    DateTimeDialog myDialog;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
@@ -41,7 +42,7 @@ public class DateTimeDialogFragment extends DialogFragment implements OnTimeChan
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        DateTimeDialog myDialog = new DateTimeDialog(getActivity());
+         myDialog = new DateTimeDialog(getActivity());
         myDialog.setTimeListener(this);
         myDialog.setDateListener(year, monthOfYear, dayOfMonth, this);
         System.out.println("in fragment");
@@ -58,8 +59,9 @@ public class DateTimeDialogFragment extends DialogFragment implements OnTimeChan
         System.out.println(d.getYear());
         System.out.println("should be"+year);
         String strDate = dateFormatter.format(d);
-        String date =String.valueOf(monthOfYear).toString()+":"+String.valueOf(dayOfMonth).toString()+":"+String.valueOf(year).toString();
+        String date =String.valueOf(monthOfYear+1).toString()+":"+String.valueOf(dayOfMonth).toString()+":"+String.valueOf(year).toString();
         System.out.println("date is"+date);
+        myDialog.setDate(date);
 
 
 
@@ -70,5 +72,7 @@ public class DateTimeDialogFragment extends DialogFragment implements OnTimeChan
 
         time = String.valueOf(hourOfDay).toString() + ":" + String.valueOf(minute).toString();
         System.out.println("start time is"+time);
+        myDialog.setTime(time);
+
     }
 }
