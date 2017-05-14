@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.app.DialogFragment;
@@ -100,6 +101,8 @@ public class DatepickerFragment2 extends Fragment implements View.OnClickListene
         LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_datepicker_fragment2, container, false);
         LinearLayout startLayout = (LinearLayout)linearLayout.findViewById(R.id.startLayout);
         LinearLayout endLayout = (LinearLayout)linearLayout.findViewById(R.id.EndLayout);
+        ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
+        homeImage.setOnClickListener(this);
         startLayout.setOnClickListener(this);
         endLayout.setOnClickListener(this);
         return linearLayout;
@@ -158,6 +161,23 @@ public class DatepickerFragment2 extends Fragment implements View.OnClickListene
                 System.out.println("end layout");
                 DialogFragment newFragment1 = new DateEndTimeDialogFragment();
                 newFragment1.show(getFragmentManager(), "timePicker");
+                break;
+            case R.id.homeImage:
+                Fragment fragment = null;
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                System.out.println("in homeimage handler");
+                try {
+                    fragment = (Fragment) HomeFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                transaction.replace(R.id.flContent, fragment);
+                //transaction.addToBackStack(null);
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                // Commit the transaction
+                transaction.commit();
+                break;
 
         }
     }

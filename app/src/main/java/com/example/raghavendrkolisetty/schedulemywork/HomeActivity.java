@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, SchedulesFragment.OnFragmentInteractionListener, UpcomingFragment.OnFragmentInteractionListener,DatepickerFragment2.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, SchedulesFragment.OnFragmentInteractionListener, UpcomingFragment.OnFragmentInteractionListener,DatepickerFragment2.OnFragmentInteractionListener,StaffFragment.OnFragmentInteractionListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -152,6 +152,7 @@ public class HomeActivity extends AppCompatActivity
 
             fragmentClass=SchedulesFragment.class;
         } else if (id == R.id.nav_slideshow) {
+            fragmentClass=StaffFragment.class;
 
         } else if (id == R.id.nav_manage) {
 
