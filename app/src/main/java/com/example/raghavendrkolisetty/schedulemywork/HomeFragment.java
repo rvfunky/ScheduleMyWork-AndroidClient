@@ -74,6 +74,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_home,container,false);
         LinearLayout schedulesLayout = (LinearLayout) linearLayout.findViewById(R.id.schedulesLayout);
         schedulesLayout.setOnClickListener(this);
+        LinearLayout tradesLayout = (LinearLayout) linearLayout.findViewById(R.id.tradesLayout);
+        tradesLayout.setOnClickListener(this);
+        LinearLayout staffLayout = (LinearLayout) linearLayout.findViewById(R.id.staffLayout);
+        staffLayout.setOnClickListener(this);
+
+
+
         return linearLayout;
     }
 
@@ -103,16 +110,53 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        Fragment fragment=null;
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (v.getId()){
+
             case R.id.schedulesLayout:
-                Fragment fragment=null;
+
                 try {
+
                     fragment = (Fragment) SchedulesFragment.newInstance("a","b");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+                break;
+            case R.id.tradesLayout:
+
+                try {
+                    fragment = (Fragment) TradesFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // Replace whatever is in the fragment_container view with this fragment,
+
+                transaction.replace(R.id.flContent, fragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+
+                break;
+            case R.id.staffLayout:
+                try {
+                    fragment = (Fragment) StaffFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack

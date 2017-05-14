@@ -11,11 +11,11 @@
             android:icon="@drawable/ic_schedule_black_24dp"
             android:title="Schdules" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_trades"
             android:icon="@drawable/ic_find_replace_black_24dp"
             android:title="Trades" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_staff"
             android:icon="@drawable/ic_group_black_24dp"
             android:title="Staff" />
         <item

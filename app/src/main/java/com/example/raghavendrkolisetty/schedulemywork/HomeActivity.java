@@ -4,8 +4,6 @@ import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.view.View;
@@ -24,7 +22,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, SchedulesFragment.OnFragmentInteractionListener, UpcomingFragment.OnFragmentInteractionListener,DatepickerFragment2.OnFragmentInteractionListener,StaffFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, SchedulesFragment.OnFragmentInteractionListener,
+        UpcomingFragment.OnFragmentInteractionListener,DatepickerFragment2.OnFragmentInteractionListener,StaffFragment.OnFragmentInteractionListener,
+        TradesFragment.OnFragmentInteractionListener,TradesOpenshiftsFragment.OnFragmentInteractionListener,
+        TradesPostmyshitsFragment.OnFragmentInteractionListener,TradesIOfferedFragment.OnFragmentInteractionListener,TradesIPickedFragment.OnFragmentInteractionListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -151,10 +152,11 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_schedules) {
 
             fragmentClass=SchedulesFragment.class;
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_staff) {
             fragmentClass=StaffFragment.class;
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_trades) {
+            fragmentClass=TradesFragment.class;
 
         } else if(id==R.id.logout){
 
