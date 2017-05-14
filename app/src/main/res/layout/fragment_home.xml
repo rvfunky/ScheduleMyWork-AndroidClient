@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.raghavendrkolisetty.schedulemywork.SchedulesFragment"
+    android:background="#f5f5dc"
     android:baselineAligned="false">
 
     <TableLayout
@@ -15,7 +16,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#eff0f1"
+            android:background="#e3d6ab"
             android:padding="20dp">
 
             <TextView
@@ -32,6 +33,7 @@
                 android:layout_gravity="center"
 
                 android:textSize="20dp"
+                android:textColor="#790604"
 
                 android:text="Welcome!" />
 
@@ -43,6 +45,7 @@
                 android:layout_gravity="center"
                 android:paddingRight="20dp"
                 android:scaleType="fitEnd"
+                android:tint="#790604"
                 android:src="@drawable/ic_refresh_black_24dp"
                />
         </TableRow>
@@ -73,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#790604"
                     android:textSize="20dp"
 
                     android:text="Schedules"/>
@@ -87,6 +90,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:tint="#790604"
                         android:src="@drawable/ic_chevron_right_black_24dp"
                        />
 
@@ -107,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#790604"
                     android:textSize="20dp"
 
                     android:text="Trades"/>
@@ -121,6 +125,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:tint="#790604"
                         android:src="@drawable/ic_chevron_right_black_24dp"
 
                         />
@@ -142,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#790604"
                     android:textSize="20dp"
 
                     android:text="Staff"/>
@@ -156,6 +161,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:tint="#790604"
                         android:src="@drawable/ic_chevron_right_black_24dp"
                         />
 
