@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 
 /**
