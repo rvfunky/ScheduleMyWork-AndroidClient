@@ -47,6 +47,7 @@ public class DatepickerFragment2 extends Fragment implements View.OnClickListene
 
 
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -133,10 +134,12 @@ public class DatepickerFragment2 extends Fragment implements View.OnClickListene
 
         switch (v.getId()) {
             case R.id.startLayout:
-                System.out.println("hitting start laout");
+                System.out.println("hitting start layout");
 
                 DialogFragment newFragment = new DateTimeDialogFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
+
+
 //                try {
 //                    fragment = (SwitchDateTimeDialogFragment) dateTimeFragment.show(fragmentManager,TAG_DATETIME_FRAGMENT);
 //                } catch (Exception e) {
@@ -153,7 +156,7 @@ public class DatepickerFragment2 extends Fragment implements View.OnClickListene
                 break;
             case R.id.EndLayout:
                 System.out.println("end layout");
-                DialogFragment newFragment1 = new DateTimeDialogFragment();
+                DialogFragment newFragment1 = new DateEndTimeDialogFragment();
                 newFragment1.show(getFragmentManager(), "timePicker");
 
         }
