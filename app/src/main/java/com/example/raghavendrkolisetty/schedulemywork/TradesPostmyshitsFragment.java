@@ -1,5 +1,7 @@
 package com.example.raghavendrkolisetty.schedulemywork;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +9,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 /**
@@ -17,7 +21,7 @@ import android.view.ViewGroup;
  * Use the {@link TradesPostmyshitsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TradesPostmyshitsFragment extends Fragment {
+public class TradesPostmyshitsFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +68,12 @@ public class TradesPostmyshitsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trades_postmyshits, container, false);
+        final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_trades_postmyshits,container,false);
+        LinearLayout shift1=(LinearLayout) linearLayout.findViewById(R.id.myShift1);
+        shift1.setOnClickListener(this);
+        ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
+        homeImage.setOnClickListener(this);
+        return linearLayout;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +113,28 @@ public class TradesPostmyshitsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void onClick(View v) {
+            android.app.Fragment fragment = null;
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            switch (v.getId()){
+                case R.id.homeImage:
+                    System.out.println("in homeimage handler");
+                    try {
+                        fragment = (android.app.Fragment) HomeFragment.newInstance("a","b");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    transaction.replace(R.id.flContent, fragment);
+                    //transaction.addToBackStack(null);
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    // Commit the transaction
+                    transaction.commit();
+                    break;
+
+            case R.id.myShift1:
+                System.out.println("test success for first shift");
+        }
     }
 }
