@@ -157,8 +157,8 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack
                 transaction.replace(R.id.flContent, fragment);
-                //transaction.addToBackStack(null);
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
                 break;
