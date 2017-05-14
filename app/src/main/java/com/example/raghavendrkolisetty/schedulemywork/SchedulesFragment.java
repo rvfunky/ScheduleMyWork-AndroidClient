@@ -1,11 +1,14 @@
 package com.example.raghavendrkolisetty.schedulemywork;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +30,7 @@ import static com.example.raghavendrkolisetty.schedulemywork.R.id.upcomingLinear
  * Use the {@link SchedulesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SchedulesFragment extends Fragment implements View.OnClickListener {
+public class SchedulesFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -95,6 +98,7 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        System.out.println("just attached");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -104,9 +108,19 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        System.out.println("resuming");
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void test(){
+        System.out.println("testing the fuck");
     }
 
     @Override
@@ -158,7 +172,7 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
                 // and add the transaction to the back stack
                 transaction.replace(R.id.flContent, fragment);
                 //transaction.addToBackStack(null);
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
                 break;
@@ -167,8 +181,10 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
 
 
 
+
         }
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -184,4 +200,6 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener 
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

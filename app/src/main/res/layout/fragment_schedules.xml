@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:background="#f5f5dc"
     tools:context="com.example.raghavendrkolisetty.schedulemywork.SchedulesFragment"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:id="@+id/schedulesFragment">
 
     <TableLayout
         android:layout_width="match_parent"

@@ -2,7 +2,11 @@ package com.example.raghavendrkolisetty.schedulemywork;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -59,4 +63,10 @@ public class DateEndTimeDialogFragment extends DialogFragment implements TimePic
         myDialog.setTime(time);
 
     }
+
+    @Override
+    public void onDismiss(DialogInterface dialog){
+        System.out.println("in on dismiss method");
+    }
+
 }
