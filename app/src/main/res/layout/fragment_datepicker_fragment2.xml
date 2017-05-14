@@ -86,8 +86,25 @@ android:baselineAligned="false">
                     android:src="@drawable/ic_chevron_right_black_24dp" />
 
             </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/startDateText"
+                android:textSize="20dp"
+                />
 
-        </LinearLayout><LinearLayout
+        </LinearLayout>
+
+
+
+
+
+
+
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
