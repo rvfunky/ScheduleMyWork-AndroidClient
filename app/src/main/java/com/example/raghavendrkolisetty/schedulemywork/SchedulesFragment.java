@@ -81,9 +81,14 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener{
         LinearLayout  upcomingLinearLayout= (LinearLayout) linearLayout.findViewById(R.id.upcomingLinearLayout);
         ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
         LinearLayout datepicker=(LinearLayout) linearLayout.findViewById(R.id.datePicker);
+        LinearLayout whoIsOnNow = (LinearLayout) linearLayout.findViewById(R.id.whoIsOnNow);
+        LinearLayout whoIsOnLater = (LinearLayout) linearLayout.findViewById(R.id.whoIsOnLater);
         homeImage.setOnClickListener(this);
         upcomingLinearLayout.setOnClickListener(this);
         datepicker.setOnClickListener(this);
+        whoIsOnNow.setOnClickListener(this);
+        whoIsOnLater.setOnClickListener(this);
+
 
         return linearLayout;
     }
@@ -172,6 +177,37 @@ public class SchedulesFragment extends Fragment implements View.OnClickListener{
                 // and add the transaction to the back stack
                 transaction.replace(R.id.flContent, fragment);
                 //transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                // Commit the transaction
+                transaction.commit();
+                break;
+
+            case R.id.whoIsOnNow:
+                //System.out.println("in who is on now fragmnet");
+                try {
+                    fragment = (Fragment) WhoIsOnNowFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                transaction.addToBackStack(null);
+                //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                // Commit the transaction
+                transaction.commit();
+                break;
+
+            case R.id.whoIsOnLater:
+                try {
+                    fragment = (Fragment) WhoIsOnLaterFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.flContent, fragment);
+                transaction.addToBackStack(null);
                 //fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 // Commit the transaction
                 transaction.commit();
