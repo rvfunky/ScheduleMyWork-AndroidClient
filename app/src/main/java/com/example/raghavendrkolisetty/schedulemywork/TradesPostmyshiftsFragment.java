@@ -3,14 +3,40 @@ package com.example.raghavendrkolisetty.schedulemywork;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 
 /**
@@ -21,7 +47,7 @@ import android.widget.LinearLayout;
  * Use the {@link TradesPostmyshiftsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TradesPostmyshiftsFragment extends Fragment implements View.OnClickListener {
+public class TradesPostmyshiftsFragment extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +56,9 @@ public class TradesPostmyshiftsFragment extends Fragment implements View.OnClick
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    List<RowItem> rowItems;
+    List<RowItem> t;
+    JSONObject response=new JSONObject();
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,10 +99,117 @@ public class TradesPostmyshiftsFragment extends Fragment implements View.OnClick
         // Inflate the layout for this fragment
         System.out.println("postmyshifts oncreateview method");
         final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_trades_postmyshifts,container,false);
-        LinearLayout shift1=(LinearLayout) linearLayout.findViewById(R.id.myShift1);
-        shift1.setOnClickListener(this);
         ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
         homeImage.setOnClickListener(this);
+        final ListView lv=(ListView) linearLayout.findViewById(R.id.list);
+        final List<RowItem> output = new ArrayList<RowItem>();
+        lv.setOnItemClickListener(this);
+
+
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/user", jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response1) {
+                System.out.println("in JSON response"+response1.toString());
+                response=response1;
+
+//                try {
+//                    frameData();
+//                }
+//                catch (JSONException e)
+//                {
+//                    e.printStackTrace();
+//                }
+
+                System.out.println("in testing"+response1.toString());
+                JSONObject issueObj = response1;
+                Iterator keysToCopyIterator = issueObj.keys();
+                while (keysToCopyIterator.hasNext()) {
+                    String key = (String) keysToCopyIterator.next();
+                    JSONArray keyArray=new JSONArray();
+                    try {
+                        keyArray = issueObj.getJSONArray(key);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    Iterator itemIterator=null;
+                    for(int i=0;i<keyArray.length();i++)
+                    {
+                        try {
+                            itemIterator = keyArray.getJSONObject(i).keys();
+                        }
+                        catch(JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        String []itemValuesArray=new String[4];
+                        int k=0;
+                        while (itemIterator.hasNext()) {
+                            String itemKey = (String) itemIterator.next();
+                            try {
+                                itemValuesArray[k++] = keyArray.getJSONObject(i).getString(itemKey);
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        System.out.println("hello"+itemValuesArray[0]);
+                        RowItem item=new RowItem(itemValuesArray[0],itemValuesArray[2],itemValuesArray[1]);
+                        output.add(item);
+                        System.out.println("reached here");
+                        rowItems=output;
+                        CustomAdapter adapter = new CustomAdapter(getActivity(),output);
+                        lv.setAdapter(adapter);
+                    }
+
+                }
+
+
+
+
+
+
+
+                SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
+                System.out.println("checking prefs"+prefs.getString("access_token",null));
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if(networkResponse!=null){
+                    if(networkResponse.statusCode==400){
+                        System.out.println("user already exists");
+                    }
+                }
+                System.out.println("in error listener response"+error);
+            }
+        })
+
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
+                System.out.println("accessing token from homeactivity"+prefs.getString("access_token",null));
+                String access_token = prefs.getString("access_token",null);
+                headers.put("Authorization", "JWT "+access_token);
+                return headers;
+            }
+        };
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(jsonObjectRequest);
+
+
         return linearLayout;
     }
 
@@ -134,8 +270,67 @@ public class TradesPostmyshiftsFragment extends Fragment implements View.OnClick
                     transaction.commit();
                     break;
 
-            case R.id.myShift1:
-                System.out.println("test success for first shift");
+
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+        String day = rowItems.get(position).getDay();
+        System.out.println("checking day is"+day);
+
+
+
+        String startTime=rowItems.get(position).getStartTime();
+        String endTime=rowItems.get(position).getEndTime();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("startTime", startTime);
+            jsonObject.put("endTime",endTime);
+            jsonObject.put("day",day);
+        }catch (Exception e){
+            System.out.println("in the json exception phase");
+        }
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://54.71.67.192:5000/trade/offer", jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("in JSON response"+response.toString());
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if(networkResponse!=null){
+                    if(networkResponse.statusCode==400){
+                        System.out.println("user already exists");
+                    }
+                }
+                System.out.println("in error listener response"+error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( getActivity() );
+                System.out.println("accessing token from homeactivity"+prefs.getString("access_token",null));
+                String access_token = prefs.getString("access_token",null);
+                headers.put("Authorization", "JWT "+access_token);
+                return headers;
+            }
+        };
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(jsonObjectRequest);
+
+
+
     }
 }
