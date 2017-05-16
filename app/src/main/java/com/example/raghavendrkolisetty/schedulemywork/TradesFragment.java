@@ -155,7 +155,7 @@ public class TradesFragment extends Fragment implements  View.OnClickListener {
                 break;
             case R.id.Postmyshifts:
                 try {
-                    fragment = (android.app.Fragment) TradesPostmyshitsFragment.newInstance("a","b");
+                    fragment = (android.app.Fragment) TradesPostmyshiftsFragment.newInstance("a","b");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

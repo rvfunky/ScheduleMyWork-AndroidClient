@@ -25,7 +25,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener, SchedulesFragment.OnFragmentInteractionListener,
         UpcomingFragment.OnFragmentInteractionListener,DatepickerFragment2.OnFragmentInteractionListener,StaffFragment.OnFragmentInteractionListener,
         TradesFragment.OnFragmentInteractionListener,TradesOpenshiftsFragment.OnFragmentInteractionListener,
-        TradesPostmyshitsFragment.OnFragmentInteractionListener,TradesIOfferedFragment.OnFragmentInteractionListener,TradesIPickedFragment.OnFragmentInteractionListener {
+        TradesPostmyshiftsFragment.OnFragmentInteractionListener,TradesIOfferedFragment.OnFragmentInteractionListener,TradesIPickedFragment.OnFragmentInteractionListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
