@@ -156,7 +156,7 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener,A
 
                         }
                         System.out.println("hello"+itemValuesArray[0]);
-                        RowItem item=new RowItem(itemValuesArray[0],itemValuesArray[1],itemValuesArray[2],itemValuesArray[3]);
+                        RowItem item=new RowItem(itemValuesArray[0],itemValuesArray[2],itemValuesArray[1]);
                         output.add(item);
                         System.out.println("reached here");
                         rowItems=output;

@@ -48,7 +48,7 @@ public class CustomAdapter extends BaseAdapter {
         TextView shiftDate;
         TextView shiftStartTime;
         TextView shiftEndTime;
-        TextView slot;
+
 
     }
 
@@ -68,13 +68,12 @@ public class CustomAdapter extends BaseAdapter {
                     .findViewById(R.id.day);
             holder.shiftStartTime = (TextView) convertView.findViewById(R.id.starttime);
             holder.shiftEndTime = (TextView) convertView.findViewById(R.id.endtime);
-            holder.slot = (TextView) convertView.findViewById(R.id.slot);
+
 
             RowItem row_pos = rowItems.get(position);
             holder.shiftDate.setText(row_pos.getDay());
             holder.shiftStartTime.setText(row_pos.getStartTime());
             holder.shiftEndTime.setText(row_pos.getEndTime());
-            holder.slot.setText(row_pos.getSlot());
             convertView.setTag(holder);
             System.out.println("success");
         } else {

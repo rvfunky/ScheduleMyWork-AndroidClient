@@ -8,16 +8,15 @@ public class RowItem {
     private String day;
     private String startTime;
     private String endTime;
-    private String slot;
 
 
 
-    public RowItem(String day, String startTime, String endTime, String slot)
+
+    public RowItem(String day, String startTime, String endTime)
     {
         this.day=day;
         this.startTime=startTime;
         this.endTime=endTime;
-        this.slot=slot;
         System.out.println("constructor success");
 
     }
@@ -42,11 +41,6 @@ public class RowItem {
         this.endTime = endTime;
     }
 
-    public String getSlot() {
-        return slot;
-    }
-    public void setSlot(String slot) {
-        this.slot = slot;
-    }
+
 
 }

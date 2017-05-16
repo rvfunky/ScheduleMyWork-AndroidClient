@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:gravity="center"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:id="@+id/day"
             android:text="sample shiftdate"
             android:textColor="#790604"/>
@@ -24,7 +24,7 @@
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
             android:textColor="#790604"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:id="@+id/starttime"
             android:text="shifttime"/>
         <TextView
@@ -32,17 +32,10 @@
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
             android:textColor="#790604"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:id="@+id/endtime"
             android:text="shifttime"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="15dp"
-            android:textColor="#790604"
-            android:textSize="20dp"
-            android:id="@+id/slot"
-            android:text="shifttime"/>
+
     </LinearLayout>
 
 </LinearLayout>
