@@ -1,5 +1,7 @@
 package com.example.raghavendrkolisetty.schedulemywork;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,6 +10,9 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -18,9 +23,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -34,7 +44,7 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
  * Use the {@link WhoIsOnLaterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WhoIsOnLaterFragment extends Fragment {
+public class WhoIsOnLaterFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,6 +53,11 @@ public class WhoIsOnLaterFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    List<OpenshiftsRowitem> rowItems;
+    List<OpenshiftsRowitem> t;
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,13 +95,81 @@ public class WhoIsOnLaterFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_who_is_on_later, container, false);
+        ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
+        homeImage.setOnClickListener(this);
+        final ListView lv=(ListView) linearLayout.findViewById(R.id.list);
+        final List<OpenshiftsRowitem> output = new ArrayList<OpenshiftsRowitem>();
+
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/later", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("in JSON response"+response.toString());
+
+                JSONObject issueObj = response;
+                Iterator keysToCopyIterator = issueObj.keys();
+                while (keysToCopyIterator.hasNext()) {
+                    String key = (String) keysToCopyIterator.next();
+                    JSONArray keyArray=new JSONArray();
+                    try {
+                        keyArray = issueObj.getJSONArray(key);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    Iterator itemIterator=null;
+                    for(int i=0;i<keyArray.length();i++)
+                    {
+                        try {
+                            itemIterator = keyArray.getJSONObject(i).keys();
+                        }
+                        catch(JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        String []itemValuesArray=new String[5];
+                        int k=0;
+                        while (itemIterator.hasNext()) {
+                            String itemKey = (String) itemIterator.next();
+                            try {
+                                itemValuesArray[k++] = keyArray.getJSONObject(i).getString(itemKey);
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        System.out.println("hello"+itemValuesArray[0]);
+                        OpenshiftsRowitem item=new OpenshiftsRowitem(itemValuesArray[0],itemValuesArray[2],itemValuesArray[1],itemValuesArray[3]);
+                        output.add(item);
+                        System.out.println("reached here");
+                        rowItems=output;
+                        OpenshiftsFragmentAdapter adapter = new OpenshiftsFragmentAdapter(getActivity(),output);
+                        lv.setAdapter(adapter);
+                    }
+
+                }
+
+
+
+
+
+
                 SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
                 System.out.println("checking prefs"+prefs.getString("access_token",null));
+
+
+
             }
 
         }, new Response.ErrorListener() {
@@ -116,13 +199,8 @@ public class WhoIsOnLaterFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(jsonObjectRequest);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_who_is_on_later, container, false);
+        return  linearLayout;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -162,5 +240,28 @@ public class WhoIsOnLaterFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void onClick(View v) {
+        android.app.Fragment fragment = null;
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        switch (v.getId()){
+            case R.id.homeImage:
+                System.out.println("in homeimage handler");
+                try {
+                    fragment = (android.app.Fragment) HomeFragment.newInstance("a","b");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                transaction.replace(R.id.flContent, fragment);
+                //transaction.addToBackStack(null);
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                // Commit the transaction
+                transaction.commit();
+                break;
+
+
+        }
     }
 }

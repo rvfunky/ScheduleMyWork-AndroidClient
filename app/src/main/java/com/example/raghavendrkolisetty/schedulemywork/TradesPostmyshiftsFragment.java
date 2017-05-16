@@ -164,6 +164,7 @@ public class TradesPostmyshiftsFragment extends Fragment implements View.OnClick
                         rowItems=output;
                         CustomAdapter adapter = new CustomAdapter(getActivity(),output);
                         lv.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
 
                 }
