@@ -10,8 +10,11 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -22,9 +25,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -38,11 +46,14 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
  * Use the {@link UpcomingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpcomingFragment extends Fragment implements View.OnClickListener {
+public class UpcomingFragment extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    List<RowItem> rowItems;
+    List<RowItem> t;
+    JSONObject response=new JSONObject();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,12 +94,130 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)  {
         // Inflate the layout for this fragment
         final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_upcoming,container,false);
 
         ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
         homeImage.setOnClickListener(this);
+        final ListView lv=(ListView) linearLayout.findViewById(R.id.list);
+        final List<RowItem> output = new ArrayList<RowItem>();
+        lv.setOnItemClickListener(this);
+
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts", jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response1) {
+                System.out.println("in JSON response"+response1.toString());
+                response=response1;
+
+//                try {
+//                    frameData();
+//                }
+//                catch (JSONException e)
+//                {
+//                    e.printStackTrace();
+//                }
+
+                System.out.println("in testing"+response1.toString());
+                JSONObject issueObj = response1;
+                Iterator keysToCopyIterator = issueObj.keys();
+                while (keysToCopyIterator.hasNext()) {
+                    String key = (String) keysToCopyIterator.next();
+                    JSONArray keyArray=new JSONArray();
+                    try {
+                        keyArray = issueObj.getJSONArray(key);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    Iterator itemIterator=null;
+                    for(int i=0;i<keyArray.length();i++)
+                    {
+                        try {
+                            itemIterator = keyArray.getJSONObject(i).keys();
+                        }
+                        catch(JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        String []itemValuesArray=new String[4];
+                        int k=0;
+                        while (itemIterator.hasNext()) {
+                            String itemKey = (String) itemIterator.next();
+                            try {
+                                itemValuesArray[k++] = keyArray.getJSONObject(i).getString(itemKey);
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        System.out.println("hello"+itemValuesArray[0]);
+                        RowItem item=new RowItem(itemValuesArray[0],itemValuesArray[1],itemValuesArray[2],itemValuesArray[3]);
+                        output.add(item);
+                        System.out.println("reached here");
+                        rowItems=output;
+                        CustomAdapter adapter = new CustomAdapter(getActivity(),output);
+                        lv.setAdapter(adapter);
+
+
+
+
+
+
+
+
+
+                    }
+
+
+                }
+
+
+
+
+
+
+
+                SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
+                System.out.println("checking prefs"+prefs.getString("access_token",null));
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if(networkResponse!=null){
+                    if(networkResponse.statusCode==400){
+                        System.out.println("user already exists");
+                    }
+                }
+                System.out.println("in error listener response"+error);
+            }
+        })
+
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
+                System.out.println("accessing token from homeactivity"+prefs.getString("access_token",null));
+                String access_token = prefs.getString("access_token",null);
+                headers.put("Authorization", "JWT "+access_token);
+                return headers;
+            }
+        };
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(jsonObjectRequest);
+
+
         return linearLayout;
     }
 
@@ -117,45 +246,45 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        JSONObject jsonObject = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts", jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                System.out.println("in JSON response"+response.toString());
-                SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
-                System.out.println("checking prefs"+prefs.getString("access_token",null));
-            }
 
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                if(networkResponse!=null){
-                    if(networkResponse.statusCode==400){
-                        System.out.println("user already exists");
-                    }
-                }
-                System.out.println("in error listener response"+error);
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                SharedPreferences prefs = getDefaultSharedPreferences(getActivity().getApplicationContext());
-                System.out.println("accessing token from homeactivity"+prefs.getString("access_token",null));
-                String access_token = prefs.getString("access_token",null);
-                headers.put("Authorization", "JWT "+access_token);
-                return headers;
-            }
-        };
+           }
+
+    public List<RowItem> frameData() throws JSONException {
+        List<RowItem> output = new ArrayList<RowItem>();
+
+        System.out.println("in testing"+response.toString());
+        JSONObject issueObj = response;
+        Iterator keysToCopyIterator = issueObj.keys();
+        while (keysToCopyIterator.hasNext()) {
+            String key = (String) keysToCopyIterator.next();
+            JSONArray keyArray = issueObj.getJSONArray(key);
+//            List<child> childList=new ArrayList<>();
+//            for(int i=0;i<keyArray.length();i++)
+//            {
+//                childList.add(new child(keyArray.getString(i)));
+//            }
+//            for (int i = 0; i < keyArray.length(); i++) {
+//
+//            }
 
 
+            return output;
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(jsonObjectRequest);
+
+        }
+        return output;
     }
+
+
+
+
+
+
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -192,4 +321,20 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+
+
+        String day = rowItems.get(position).getDay();
+        System.out.println("selected day is"+day);
+
+
+
+
+
+  }
 }
+

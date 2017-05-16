@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:id="@+id/myShifts"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:id="@+id/day"
+            android:text="sample shiftdate"
+            android:textColor="#790604"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#790604"
+            android:textSize="20dp"
+            android:id="@+id/starttime"
+            android:text="shifttime"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#790604"
+            android:textSize="20dp"
+            android:id="@+id/endtime"
+            android:text="shifttime"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#790604"
+            android:textSize="20dp"
+            android:id="@+id/slot"
+            android:text="shifttime"/>
+    </LinearLayout>
+
+</LinearLayout>

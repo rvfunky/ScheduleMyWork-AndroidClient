@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.json.JSONObject;
+
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +34,9 @@ public class TradesPostmyshitsFragment extends Fragment implements View.OnClickL
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    List<RowItem> rowItems;
+    List<RowItem> t;
+    JSONObject response=new JSONObject();
 
     private OnFragmentInteractionListener mListener;
 
