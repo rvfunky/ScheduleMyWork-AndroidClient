@@ -42,7 +42,7 @@
                     android:layout_gravity="center"
                     android:textSize="20dp"
                     android:textColor="#790604"
-                    android:text="Post my shifts" />
+                    android:text="Open Shifts"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
