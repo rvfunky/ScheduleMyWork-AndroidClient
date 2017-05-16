@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +29,12 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link whoIsOnNowFragment.OnFragmentInteractionListener} interface
+ * {@link WhoIsOnLaterFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link whoIsOnNowFragment#newInstance} factory method to
+ * Use the {@link WhoIsOnLaterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class whoIsOnNowFragment extends Fragment {
+public class WhoIsOnLaterFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,7 +46,7 @@ public class whoIsOnNowFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public whoIsOnNowFragment() {
+    public WhoIsOnLaterFragment() {
         // Required empty public constructor
     }
 
@@ -56,11 +56,11 @@ public class whoIsOnNowFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment whoIsOnNowFragment.
+     * @return A new instance of fragment WhoIsOnLaterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static whoIsOnNowFragment newInstance(String param1, String param2) {
-        whoIsOnNowFragment fragment = new whoIsOnNowFragment();
+    public static WhoIsOnLaterFragment newInstance(String param1, String param2) {
+        WhoIsOnLaterFragment fragment = new WhoIsOnLaterFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,24 +78,10 @@ public class whoIsOnNowFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_who_is_on_now, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
     public void onStart(){
         super.onStart();
         JSONObject jsonObject = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/user", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/later", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("in JSON response"+response.toString());
@@ -130,6 +116,20 @@ public class whoIsOnNowFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_who_is_on_later, container, false);
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
     }
 
     @Override
