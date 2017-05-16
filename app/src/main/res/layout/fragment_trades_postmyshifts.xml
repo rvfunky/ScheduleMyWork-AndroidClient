@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="#f5f5dc"
-    tools:context="com.example.raghavendrkolisetty.schedulemywork.TradesPostmyshitsFragment">
+    tools:context="com.example.raghavendrkolisetty.schedulemywork.TradesPostmyshiftsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

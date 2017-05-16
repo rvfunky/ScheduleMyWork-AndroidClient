@@ -105,7 +105,7 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener,A
         lv.setOnItemClickListener(this);
 
         JSONObject jsonObject = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/user", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response1) {
                 System.out.println("in JSON response"+response1.toString());

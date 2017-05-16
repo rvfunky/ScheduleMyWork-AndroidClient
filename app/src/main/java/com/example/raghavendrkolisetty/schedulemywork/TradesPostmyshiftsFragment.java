@@ -20,12 +20,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TradesPostmyshitsFragment.OnFragmentInteractionListener} interface
+ * {@link TradesPostmyshiftsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TradesPostmyshitsFragment#newInstance} factory method to
+ * Use the {@link TradesPostmyshiftsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TradesPostmyshitsFragment extends Fragment implements View.OnClickListener {
+public class TradesPostmyshiftsFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,7 +40,7 @@ public class TradesPostmyshitsFragment extends Fragment implements View.OnClickL
 
     private OnFragmentInteractionListener mListener;
 
-    public TradesPostmyshitsFragment() {
+    public TradesPostmyshiftsFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +50,11 @@ public class TradesPostmyshitsFragment extends Fragment implements View.OnClickL
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TradesPostmyshitsFragment.
+     * @return A new instance of fragment TradesPostmyshiftsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TradesPostmyshitsFragment newInstance(String param1, String param2) {
-        TradesPostmyshitsFragment fragment = new TradesPostmyshitsFragment();
+    public static TradesPostmyshiftsFragment newInstance(String param1, String param2) {
+        TradesPostmyshiftsFragment fragment = new TradesPostmyshiftsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,7 +75,8 @@ public class TradesPostmyshitsFragment extends Fragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_trades_postmyshits,container,false);
+        System.out.println("postmyshifts oncreateview method");
+        final LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_trades_postmyshifts,container,false);
         LinearLayout shift1=(LinearLayout) linearLayout.findViewById(R.id.myShift1);
         shift1.setOnClickListener(this);
         ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
