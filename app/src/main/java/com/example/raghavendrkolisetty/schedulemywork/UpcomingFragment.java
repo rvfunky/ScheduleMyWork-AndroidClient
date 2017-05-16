@@ -162,17 +162,7 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener,A
                         rowItems=output;
                         CustomAdapter adapter = new CustomAdapter(getActivity(),output);
                         lv.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
                     }
-
 
                 }
 
@@ -330,9 +320,6 @@ public class UpcomingFragment extends Fragment implements View.OnClickListener,A
 
         String day = rowItems.get(position).getDay();
         System.out.println("selected day is"+day);
-
-
-
 
 
   }
