@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,8 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    List<RowItem> rowItems;
-    List<RowItem> t;
+    List<OpenshiftsRowitem> rowItems;
+    List<OpenshiftsRowitem> t;
     JSONObject response=new JSONObject();
 
     // TODO: Rename and change types of parameters
@@ -100,13 +101,13 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
         ImageView homeImage = (ImageView) linearLayout.findViewById(R.id.homeImage);
         homeImage.setOnClickListener(this);
         final ListView lv=(ListView) linearLayout.findViewById(R.id.list);
-        final List<RowItem> output = new ArrayList<RowItem>();
+        final List<OpenshiftsRowitem> output = new ArrayList<OpenshiftsRowitem>();
         lv.setOnItemClickListener(this);
 
 
         JSONObject jsonObject = new JSONObject();
         //change api here
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/user", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/trades/open", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response1) {
                 System.out.println("in JSON response"+response1.toString());
@@ -134,7 +135,7 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
                         {
                             e.printStackTrace();
                         }
-                        String []itemValuesArray=new String[4];
+                        String []itemValuesArray=new String[5];
                         int k=0;
                         while (itemIterator.hasNext()) {
                             String itemKey = (String) itemIterator.next();
@@ -148,11 +149,11 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
 
                         }
                         System.out.println("hello"+itemValuesArray[0]);
-                        RowItem item=new RowItem(itemValuesArray[0],itemValuesArray[2],itemValuesArray[1]);
+                        OpenshiftsRowitem item=new OpenshiftsRowitem(itemValuesArray[1],itemValuesArray[4],itemValuesArray[2],itemValuesArray[3]);
                         output.add(item);
                         System.out.println("reached here");
                         rowItems=output;
-                        CustomAdapter adapter = new CustomAdapter(getActivity(),output);
+                        OpenshiftsFragmentAdapter adapter = new OpenshiftsFragmentAdapter(getActivity(),output);
                         lv.setAdapter(adapter);
                     }
 
@@ -272,6 +273,66 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
 
         String day = rowItems.get(position).getDay();
         System.out.println("selected day is"+day);
+
+
+
+
+
+        String startTime=rowItems.get(position).getStartTime();
+        String endTime=rowItems.get(position).getEndTime();
+        String offeredUserName=rowItems.get(position).getOfferedUser();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("startTime", startTime);
+            jsonObject.put("endTime",endTime);
+            jsonObject.put("day",day);
+            jsonObject.put("offeredUserName",offeredUserName);
+
+        }catch (Exception e){
+            System.out.println("in the json exception phase");
+        }
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://54.71.67.192:5000/trade/accept", jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("in JSON response"+response.toString());
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if(networkResponse!=null){
+                    if(networkResponse.statusCode==400){
+                        System.out.println("user already exists");
+                    }
+                }
+                System.out.println("in error listener response"+error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( getActivity() );
+                System.out.println("accessing token from homeactivity"+prefs.getString("access_token",null));
+                String access_token = prefs.getString("access_token",null);
+                headers.put("Authorization", "JWT "+access_token);
+                return headers;
+            }
+        };
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(jsonObjectRequest);
+
+
+
+
+
+
 
 
     }
