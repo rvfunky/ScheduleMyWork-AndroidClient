@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -286,6 +287,9 @@ public class TradesPostmyshiftsFragment extends Fragment implements View.OnClick
 
         String startTime=rowItems.get(position).getStartTime();
         String endTime=rowItems.get(position).getEndTime();
+        Toast.makeText(getActivity(), "Your are trading this shift",
+                Toast.LENGTH_SHORT).show();
+
 
         JSONObject jsonObject = new JSONObject();
         try {

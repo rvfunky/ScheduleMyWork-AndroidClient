@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -281,6 +282,9 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
         String startTime=rowItems.get(position).getStartTime();
         String endTime=rowItems.get(position).getEndTime();
         String offeredUserName=rowItems.get(position).getOfferedUser();
+
+        Toast.makeText(getActivity(), "You are selecting this shit and it will be scheduled to you",
+                Toast.LENGTH_SHORT).show();
 
         JSONObject jsonObject = new JSONObject();
         try {
