@@ -109,7 +109,7 @@ public class WhoIsOnLaterFragment extends Fragment implements View.OnClickListen
         final List<OpenshiftsRowitem> output = new ArrayList<OpenshiftsRowitem>();
 
         JSONObject jsonObject = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/shifts/later", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://52.32.123.205:5000/shifts/later", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("in JSON response"+response.toString());

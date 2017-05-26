@@ -32,7 +32,7 @@ public class HomeActivity2 extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         JSONObject jsonObject = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://54.71.67.192:5000/test", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://52.32.123.205:5000/test", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("in JSON response"+response.toString());

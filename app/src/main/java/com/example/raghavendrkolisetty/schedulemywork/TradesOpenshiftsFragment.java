@@ -108,7 +108,7 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
 
         JSONObject jsonObject = new JSONObject();
         //change api here
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://54.71.67.192:5000/trades/open", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://52.32.123.205:5000/trades/open", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response1) {
                 System.out.println("in JSON response"+response1.toString());
@@ -298,7 +298,7 @@ public class TradesOpenshiftsFragment extends Fragment implements View.OnClickLi
         }
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://54.71.67.192:5000/trade/accept", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://52.32.123.205:5000/trade/accept", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("in JSON response"+response.toString());
